@@ -53,6 +53,17 @@ namespace RTCPFrameReaderLib.UnitTest
 			Assert.AreEqual(247u, RTCP.SenderInfo.SenderPacketCount);
 			Assert.AreEqual(39520u, RTCP.SenderInfo.SenderOctetCount);
 
+			// ReceptionReport
+			Assert.AreEqual(1, RTCP.ReceptionReports.Length);
+			Assert.AreEqual(2571709637u, RTCP.ReceptionReports[0].SSRC);
+			Assert.AreEqual(0, RTCP.ReceptionReports[0].FractionLost);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].CumulatedPacketLost);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].SequenceNumberCycles);
+			Assert.AreEqual(2173u, RTCP.ReceptionReports[0].HighestSequenceNumberReceived);
+			Assert.AreEqual(4u, RTCP.ReceptionReports[0].InterarrivalJitter);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].LastSRTimeStamp);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].DelaySinceLastSRTimeStamp);
+
 		}
 
 	}

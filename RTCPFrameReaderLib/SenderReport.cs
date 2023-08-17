@@ -14,9 +14,15 @@ namespace RTCPFrameReaderLib
 			private set;
 		}
 
-		public SenderReport(RTCPHeader Header,SenderInfo SenderInfo) : base(Header)
+		public ReceptionReport[] ReceptionReports
 		{
-			this.SenderInfo= SenderInfo;
+			get;
+			private set;
+		}
+
+		public SenderReport(RTCPHeader Header,SenderInfo SenderInfo, ReceptionReport[] ReceptionReports) : base(Header)
+		{
+			this.SenderInfo= SenderInfo;this.ReceptionReports= ReceptionReports; 
 		}
 
 	}
