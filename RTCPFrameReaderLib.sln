@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCPFrameReaderLib", "RTCPFrameReaderLib\RTCPFrameReaderLib.csproj", "{EB3B8CEB-6755-4260-AB9B-A07E6E12CD71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCPFrameReaderLib.UnitTest", "RTCPFrameReaderLib.UnitTest\RTCPFrameReaderLib.UnitTest.csproj", "{9D1394D0-2AB9-473B-96B1-763723D446F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB3B8CEB-6755-4260-AB9B-A07E6E12CD71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB3B8CEB-6755-4260-AB9B-A07E6E12CD71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB3B8CEB-6755-4260-AB9B-A07E6E12CD71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB3B8CEB-6755-4260-AB9B-A07E6E12CD71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46091B8E-3836-4DE4-8590-3283815EFF62}
+	EndGlobalSection
+EndGlobal
