@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCPFrameReaderLib", "RTCPF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RTCPFrameReaderLib.UnitTest", "RTCPFrameReaderLib.UnitTest\RTCPFrameReaderLib.UnitTest.csproj", "{9D1394D0-2AB9-473B-96B1-763723D446F0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigEndianReaderLib", "..\EthernetFrameReaderLib\BigEndianReaderLib\BigEndianReaderLib.csproj", "{79F2711E-0CA4-4DEE-BFB8-D1842469DEF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigEndianReaderLib.UnitTest", "..\EthernetFrameReaderLib\BigEndianReaderLib.UnitTest\BigEndianReaderLib.UnitTest.csproj", "{1545E759-6DE8-49AA-A18C-4868079A0277}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D1394D0-2AB9-473B-96B1-763723D446F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79F2711E-0CA4-4DEE-BFB8-D1842469DEF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79F2711E-0CA4-4DEE-BFB8-D1842469DEF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79F2711E-0CA4-4DEE-BFB8-D1842469DEF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79F2711E-0CA4-4DEE-BFB8-D1842469DEF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1545E759-6DE8-49AA-A18C-4868079A0277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1545E759-6DE8-49AA-A18C-4868079A0277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1545E759-6DE8-49AA-A18C-4868079A0277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1545E759-6DE8-49AA-A18C-4868079A0277}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
