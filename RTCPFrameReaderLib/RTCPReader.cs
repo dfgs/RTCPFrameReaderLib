@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RTCPFrameReaderLib
 {
-	public class RTCPReader
+	public class RTCPReader:IRTCPReader
 	{
 		public RTCP Read(byte[] Data)
 		{
