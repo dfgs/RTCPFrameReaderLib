@@ -131,7 +131,10 @@ namespace RTCPFrameReaderLib.UnitTest
 			// Chunks
 			Assert.AreEqual(1, RTCP.Chunks.Length);
 			Assert.AreEqual(0x0ad72405u, RTCP.Chunks[0].SSRC);
-			
+			Assert.AreEqual(2, RTCP.Chunks[0].Items.Length);
+			Assert.AreEqual(SDESItemTypes.CNAME, RTCP.Chunks[0].Items[0].Type);
+			Assert.AreEqual((byte)18, RTCP.Chunks[0].Items[0].Length);
+			Assert.AreEqual("sip:2001@10.0.2.11", RTCP.Chunks[0].Items[0].Text);
 
 		}
 

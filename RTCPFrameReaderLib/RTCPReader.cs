@@ -50,7 +50,10 @@ namespace RTCPFrameReaderLib
 
 			ReceptionReport[] receptionReports;
 			Chunk[] chunks;
-
+			List<SDESItem> items;
+			SDESItemTypes sdesItemType;
+			string text;
+			byte sdesLength;
 			//
 
 
@@ -101,11 +104,32 @@ namespace RTCPFrameReaderLib
 				case PacketTypes.SDES:
 					sdesHeader = new SourceDescriptionHeader(version, padding, count, packetType, length);
 
+
 					chunks= new Chunk[count];
 					for(int t= 0; t < count;t++)
 					{
 						senderSSRC = Reader.ReadUInt32();
-						chunks[t] = new Chunk(senderSSRC);
+
+						items = new List<SDESItem>();
+						do
+						{
+							sdesItemType = (SDESItemTypes)Reader.ReadByte();
+							if (sdesItemType != SDESItemTypes.END)
+							{
+								sdesLength = Reader.ReadByte();
+								text = Reader.ReadString(sdesLength, Encoding.UTF8);
+							}
+							else
+							{
+								// no length byte for SDESItemTypes.END, only 32b padding
+								sdesLength = 0;text = "";
+							}
+
+							items.Add(new SDESItem(sdesItemType, sdesLength, text));
+
+						} while (sdesItemType != SDESItemTypes.END);
+						// need to align to 32 bits boundary position
+						chunks[t] = new Chunk(senderSSRC, items.ToArray());
 					}
 
 					return new SourceDescription(sdesHeader,chunks);

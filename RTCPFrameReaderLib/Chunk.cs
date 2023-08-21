@@ -13,10 +13,15 @@ namespace RTCPFrameReaderLib
 			get;
 			private set;
 		}
-
-		public Chunk(uint SSRC)
+		public SDESItem[] Items
 		{
-			this.SSRC = SSRC;
+			get;
+			private set;
+		}
+
+		public Chunk(uint SSRC, SDESItem[] Items)
+		{
+			this.SSRC = SSRC;this.Items = Items;
 		}
 	}
 }
