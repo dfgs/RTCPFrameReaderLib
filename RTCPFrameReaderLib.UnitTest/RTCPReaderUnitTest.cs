@@ -138,6 +138,35 @@ namespace RTCPFrameReaderLib.UnitTest
 
 		}
 
+		[TestMethod]
+		public void ShouldReadSourceDescription2()
+		{
+			RTCPReader reader;
+			SourceDescription? RTCP;
+
+			reader = new RTCPReader();
+
+			RTCP = reader.Read(Consts.SourceDescription2) as SourceDescription;
+
+			Assert.IsNotNull(RTCP);
+
+			// header
+			Assert.AreEqual(2, RTCP.Header.Version);
+			Assert.AreEqual(false, RTCP.Header.Padding);
+			Assert.AreEqual(1u, RTCP.Header.SourceCount);
+			Assert.AreEqual(PacketTypes.SDES, RTCP.Header.PacketType);
+			Assert.AreEqual((ushort)2, RTCP.Header.Length);
+
+			// Chunks
+			Assert.AreEqual(1, RTCP.Chunks.Length);
+			Assert.AreEqual(0xcf5f7fc1, RTCP.Chunks[0].SSRC);
+			Assert.AreEqual(2, RTCP.Chunks[0].Items.Length);
+			Assert.AreEqual(SDESItemTypes.CNAME, RTCP.Chunks[0].Items[0].Type);
+			Assert.AreEqual((byte)0, RTCP.Chunks[0].Items[0].Length);
+			Assert.AreEqual("", RTCP.Chunks[0].Items[0].Text);
+
+		}
+
 
 	}
 }
