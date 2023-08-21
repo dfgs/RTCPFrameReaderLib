@@ -1,3 +1,5 @@
+using BigEndianReaderLib;
+
 namespace RTCPFrameReaderLib.UnitTest
 {
 	[TestClass]
@@ -9,7 +11,8 @@ namespace RTCPFrameReaderLib.UnitTest
 			RTCPReader reader;
 
 			reader = new RTCPReader();
-			Assert.ThrowsException<ArgumentNullException>(() => reader.Read(null));
+			Assert.ThrowsException<ArgumentNullException>(() => reader.Read((byte[])null));
+			Assert.ThrowsException<ArgumentNullException>(() => reader.Read((BigEndianReader)null));
 		}
 		[TestMethod]
 		public void ShouldCheckIfDataIsTooSmall()
@@ -105,5 +108,33 @@ namespace RTCPFrameReaderLib.UnitTest
 			Assert.AreEqual(1376u, RTCP.ReceptionReports[0].DelaySinceLastSRTimeStamp);
 
 		}
+
+		[TestMethod]
+		public void ShouldReadSourceDescription1()
+		{
+			RTCPReader reader;
+			SourceDescription? RTCP;
+
+			reader = new RTCPReader();
+
+			RTCP = reader.Read(Consts.SourceDescription1) as SourceDescription;
+
+			Assert.IsNotNull(RTCP);
+
+			// header
+			Assert.AreEqual(2, RTCP.Header.Version);
+			Assert.AreEqual(false, RTCP.Header.Padding);
+			Assert.AreEqual(1u, RTCP.Header.SourceCount);
+			Assert.AreEqual(PacketTypes.SDES, RTCP.Header.PacketType);
+			Assert.AreEqual((ushort)7, RTCP.Header.Length);
+
+			// Chunks
+			Assert.AreEqual(1, RTCP.Chunks.Length);
+			Assert.AreEqual(0x0ad72405u, RTCP.Chunks[0].SSRC);
+			
+
+		}
+
+
 	}
 }

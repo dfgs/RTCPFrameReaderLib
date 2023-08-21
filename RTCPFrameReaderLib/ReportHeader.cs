@@ -1,6 +1,6 @@
 ﻿namespace RTCPFrameReaderLib
 {
-	public struct RTCPHeader
+	public struct ReportHeader
 	{
 		public byte Version
 		{
@@ -36,7 +36,7 @@
 		}
 
 
-		public RTCPHeader( byte Version,bool Padding,uint ReceptionReportCount, PacketTypes PacketType, ushort Length, uint SenderSSRC)
+		public ReportHeader( byte Version,bool Padding,uint ReceptionReportCount, PacketTypes PacketType, ushort Length, uint SenderSSRC)
 		{
 			this.Version = Version;this.Padding= Padding;this.ReceptionReportCount= ReceptionReportCount;this.PacketType= PacketType;this.Length= Length;this.SenderSSRC= SenderSSRC;
 		}

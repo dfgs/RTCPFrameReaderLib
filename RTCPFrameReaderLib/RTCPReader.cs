@@ -11,18 +11,25 @@ namespace RTCPFrameReaderLib
 	{
 		public RTCP Read(byte[] Data)
 		{
-			BigEndianReader reader;
+			if (Data == null) throw new ArgumentNullException(nameof(Data));
+			if (Data.Length < 4) throw new ArgumentOutOfRangeException(nameof(Data));
+			return Read(new BigEndianReader(Data));
+		}
 
-			RTCPHeader header;
+		public RTCP Read(IBigEndianReader Reader)
+		{
+
+			ReportHeader reportHeader;
 			SenderInfo senderInfo;
 
+			SourceDescriptionHeader sdesHeader;
 
 			byte value;
 
 			// header
 			byte version;
 			bool padding;
-			uint receptionReportCount;
+			uint count;
 			PacketTypes packetType;
 			ushort length;
 			uint senderSSRC;
@@ -42,59 +49,73 @@ namespace RTCPFrameReaderLib
 			uint delaySinceLastSRTimeStamp;
 
 			ReceptionReport[] receptionReports;
-
+			Chunk[] chunks;
 
 			//
 
-			if (Data == null) throw new ArgumentNullException(nameof(Data));
-			if (Data.Length <4) throw new ArgumentOutOfRangeException(nameof(Data));
 
-			reader = new BigEndianReader(Data);
+			if (Reader == null) throw new ArgumentNullException(nameof(Reader));
 
 
 			// header
-			value=reader.ReadByte();
+			value = Reader.ReadByte();
 
 			version = (byte)((value & 192)>>6);
 			padding= (value & 32) !=0;
-			receptionReportCount = (uint)(value & 31);
-			packetType = (PacketTypes)reader.ReadByte();
-			length =reader.ReadUInt16();
+			count = (uint)(value & 31);
+			packetType = (PacketTypes)Reader.ReadByte();
+			length =Reader.ReadUInt16();
 			
-			if (packetType != PacketTypes.SR) throw new NotImplementedException($"Report type {packetType} is not supported");
-			
-			senderSSRC = reader.ReadUInt32();
-
-			header = new RTCPHeader(version,padding,receptionReportCount,packetType,length,senderSSRC);
-
-			// sender info
-			ntpTimeStamp = reader.ReadUInt64();
-			rtpTimeStamp = reader.ReadUInt32();
-			senderPacketCount = reader.ReadUInt32();
-			senderOctetCount = reader.ReadUInt32();
-
-			senderInfo = new SenderInfo(ntpTimeStamp,rtpTimeStamp,senderPacketCount,senderOctetCount);
-
-			// reception reports
-			receptionReports = new ReceptionReport[receptionReportCount];
-			for (int t=0;t<receptionReportCount;t++)
+			switch(packetType)
 			{
-				ssrc = reader.ReadUInt32();
-				fractionLost = reader.ReadByte();
-				cumulatedPacketLost = reader.ReadUInt24();
-				sequenceNumberCycles = reader.ReadUInt16();
-				highestSequenceNumberReceived= reader.ReadUInt16();
-				interarrivalJitter = reader.ReadUInt32();
-				lastSRTimeStamp = reader.ReadUInt32();
-				delaySinceLastSRTimeStamp = reader.ReadUInt32();
+				case PacketTypes.SR:
+					senderSSRC = Reader.ReadUInt32();
 
-				receptionReports[t]=new ReceptionReport(ssrc,fractionLost,cumulatedPacketLost,sequenceNumberCycles,highestSequenceNumberReceived,interarrivalJitter,lastSRTimeStamp,delaySinceLastSRTimeStamp);
+					reportHeader = new ReportHeader(version, padding, count, packetType, length, senderSSRC);
+
+					// sender info
+					ntpTimeStamp = Reader.ReadUInt64();
+					rtpTimeStamp = Reader.ReadUInt32();
+					senderPacketCount = Reader.ReadUInt32();
+					senderOctetCount = Reader.ReadUInt32();
+
+					senderInfo = new SenderInfo(ntpTimeStamp, rtpTimeStamp, senderPacketCount, senderOctetCount);
+
+					// reception reports
+					receptionReports = new ReceptionReport[count];
+					for (int t = 0; t < count; t++)
+					{
+						ssrc = Reader.ReadUInt32();
+						fractionLost = Reader.ReadByte();
+						cumulatedPacketLost = Reader.ReadUInt24();
+						sequenceNumberCycles = Reader.ReadUInt16();
+						highestSequenceNumberReceived = Reader.ReadUInt16();
+						interarrivalJitter = Reader.ReadUInt32();
+						lastSRTimeStamp = Reader.ReadUInt32();
+						delaySinceLastSRTimeStamp = Reader.ReadUInt32();
+
+						receptionReports[t] = new ReceptionReport(ssrc, fractionLost, cumulatedPacketLost, sequenceNumberCycles, highestSequenceNumberReceived, interarrivalJitter, lastSRTimeStamp, delaySinceLastSRTimeStamp);
+					}
+
+					return new SenderReport(reportHeader, senderInfo, receptionReports);
+				case PacketTypes.SDES:
+					sdesHeader = new SourceDescriptionHeader(version, padding, count, packetType, length);
+
+					chunks= new Chunk[count];
+					for(int t= 0; t < count;t++)
+					{
+						senderSSRC = Reader.ReadUInt32();
+						chunks[t] = new Chunk(senderSSRC);
+					}
+
+					return new SourceDescription(sdesHeader,chunks);
+				default:
+					throw new NotImplementedException($"Report type {packetType} is not supported");
 			}
 
+			
+			
 
-			return new SenderReport(header,senderInfo,receptionReports);
-
-			//throw new NotImplementedException();
 		}
 
 	}

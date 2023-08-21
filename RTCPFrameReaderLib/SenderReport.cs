@@ -8,6 +8,12 @@ namespace RTCPFrameReaderLib
 {
 	public record SenderReport : RTCP
 	{
+		public ReportHeader Header
+		{
+			get;
+			private set;
+		}
+
 		public SenderInfo SenderInfo
 		{
 			get;
@@ -20,9 +26,9 @@ namespace RTCPFrameReaderLib
 			private set;
 		}
 
-		public SenderReport(RTCPHeader Header,SenderInfo SenderInfo, ReceptionReport[] ReceptionReports) : base(Header)
+		public SenderReport(ReportHeader Header,SenderInfo SenderInfo, ReceptionReport[] ReceptionReports) : base()
 		{
-			this.SenderInfo= SenderInfo;this.ReceptionReports= ReceptionReports; 
+			this.Header = Header; this.SenderInfo= SenderInfo;this.ReceptionReports= ReceptionReports; 
 		}
 
 	}

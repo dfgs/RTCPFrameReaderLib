@@ -2,16 +2,11 @@
 {
 	public abstract record RTCP
 	{
-		public RTCPHeader Header
-		{
-			get;
-			private set;
-		}
 		
 
-		public RTCP( RTCPHeader Header)
+		public RTCP()
 		{
-			this.Header = Header;
+			
 		}
 	}
 }
