@@ -21,15 +21,8 @@ namespace RTCPFrameReaderLib.UnitTest
 
 			reader = new RTCPReader();
 			Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.Read(Consts.RTCPTooSmall));
-		}//*/
-		/*[TestMethod]
-		public void ShouldCheckIfDataSizeIsMultipleOf32()
-		{
-			RTCPReader reader;
+		}
 
-			reader = new RTCPReader();
-			Assert.ThrowsException<ArgumentOutOfRangeException>(() => reader.Read(Consts.RTCPInvalidSize));
-		}//*/
 		
 		[TestMethod]
 		public void ShouldReadSenderReport1()
@@ -166,6 +159,42 @@ namespace RTCPFrameReaderLib.UnitTest
 			Assert.AreEqual("", RTCP.Chunks[0].Items[0].Text);
 
 		}
+
+		[TestMethod]
+		public void ShouldReadReceiverReport1()
+		{
+			RTCPReader reader;
+			ReceiverReport? RTCP;
+
+			reader = new RTCPReader();
+
+			RTCP = reader.Read(Consts.ReceiverReport1) as ReceiverReport;
+
+			Assert.IsNotNull(RTCP);
+
+			// header
+			Assert.AreEqual(2, RTCP.Header.Version);
+			Assert.AreEqual(false, RTCP.Header.Padding);
+			Assert.AreEqual(0u, RTCP.Header.ReceptionReportCount);
+			Assert.AreEqual(PacketTypes.RR, RTCP.Header.PacketType);
+			Assert.AreEqual((ushort)1, RTCP.Header.Length);
+			Assert.AreEqual(0x77a2abdbu, RTCP.Header.SenderSSRC);
+
+
+			// ReceptionReport
+			/*
+			Assert.AreEqual(1, RTCP.ReceptionReports.Length);
+			Assert.AreEqual(2571709637u, RTCP.ReceptionReports[0].SSRC);
+			Assert.AreEqual(0, RTCP.ReceptionReports[0].FractionLost);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].CumulatedPacketLost);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].SequenceNumberCycles);
+			Assert.AreEqual(2173u, RTCP.ReceptionReports[0].HighestSequenceNumberReceived);
+			Assert.AreEqual(4u, RTCP.ReceptionReports[0].InterarrivalJitter);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].LastSRTimeStamp);
+			Assert.AreEqual(0u, RTCP.ReceptionReports[0].DelaySinceLastSRTimeStamp);*/
+
+		}
+
 
 
 	}

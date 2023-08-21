@@ -101,6 +101,28 @@ namespace RTCPFrameReaderLib
 					}
 
 					return new SenderReport(reportHeader, senderInfo, receptionReports);
+				case PacketTypes.RR:
+					senderSSRC = Reader.ReadUInt32();
+
+					reportHeader = new ReportHeader(version, padding, count, packetType, length, senderSSRC);
+
+					// reception reports
+					receptionReports = new ReceptionReport[count];
+					for (int t = 0; t < count; t++)
+					{
+						ssrc = Reader.ReadUInt32();
+						fractionLost = Reader.ReadByte();
+						cumulatedPacketLost = Reader.ReadUInt24();
+						sequenceNumberCycles = Reader.ReadUInt16();
+						highestSequenceNumberReceived = Reader.ReadUInt16();
+						interarrivalJitter = Reader.ReadUInt32();
+						lastSRTimeStamp = Reader.ReadUInt32();
+						delaySinceLastSRTimeStamp = Reader.ReadUInt32();
+
+						receptionReports[t] = new ReceptionReport(ssrc, fractionLost, cumulatedPacketLost, sequenceNumberCycles, highestSequenceNumberReceived, interarrivalJitter, lastSRTimeStamp, delaySinceLastSRTimeStamp);
+					}
+
+					return new ReceiverReport(reportHeader, receptionReports);
 				case PacketTypes.SDES:
 					sdesHeader = new SourceDescriptionHeader(version, padding, count, packetType, length);
 
