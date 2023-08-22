@@ -45,7 +45,8 @@ namespace RTCPFrameReaderLib.UnitTest
 			Assert.AreEqual(0x5b917d5au, RTCP.Header.SenderSSRC);
 
 			// SenderInfo
-			Assert.AreEqual(0xe888560bb38cc9a7, RTCP.SenderInfo.NTPTimeStamp);
+			Assert.AreEqual(3901249035u, RTCP.SenderInfo.NTPTimeStampIntegerPart);
+			Assert.AreEqual(3012348327u, RTCP.SenderInfo.NTPTimeStampFractionalPart);
 			Assert.AreEqual(44812u, RTCP.SenderInfo.RTPTimeStamp);
 			Assert.AreEqual(247u, RTCP.SenderInfo.SenderPacketCount);
 			Assert.AreEqual(39520u, RTCP.SenderInfo.SenderOctetCount);
@@ -84,7 +85,8 @@ namespace RTCPFrameReaderLib.UnitTest
 
 
 			// SenderInfo
-			Assert.AreEqual(0xe8885615bb1704ff, RTCP.SenderInfo.NTPTimeStamp);
+			Assert.AreEqual(3901249045u, RTCP.SenderInfo.NTPTimeStampIntegerPart);
+			Assert.AreEqual(3138847999u, RTCP.SenderInfo.NTPTimeStampFractionalPart);
 			Assert.AreEqual(0x7884a18bu, RTCP.SenderInfo.RTPTimeStamp);
 			Assert.AreEqual(748u, RTCP.SenderInfo.SenderPacketCount);
 			Assert.AreEqual(119680u, RTCP.SenderInfo.SenderOctetCount);

@@ -9,7 +9,12 @@ namespace RTCPFrameReaderLib
 	public struct SenderInfo
 	{
 
-		public ulong NTPTimeStamp
+		public uint NTPTimeStampIntegerPart
+		{
+			get;
+			private set;
+		}
+		public uint NTPTimeStampFractionalPart
 		{
 			get;
 			private set;
@@ -31,9 +36,11 @@ namespace RTCPFrameReaderLib
 			private set;
 		}
 
-		public SenderInfo(ulong NTPTimeStamp,uint RTPTimeStamp,uint SenderPacketCount,uint SenderOctetCount)
+		public SenderInfo(uint NTPTimeStampIntegerPart, uint NTPTimeStampFractionalPart, uint RTPTimeStamp,uint SenderPacketCount,uint SenderOctetCount)
 		{
-			this.NTPTimeStamp = NTPTimeStamp;this.RTPTimeStamp = RTPTimeStamp;this.SenderPacketCount = SenderPacketCount;this.SenderOctetCount = SenderOctetCount;
+			this.NTPTimeStampIntegerPart = NTPTimeStampIntegerPart;
+			this.NTPTimeStampFractionalPart = NTPTimeStampFractionalPart;
+			this.RTPTimeStamp = RTPTimeStamp;this.SenderPacketCount = SenderPacketCount;this.SenderOctetCount = SenderOctetCount;
 		}
 
 

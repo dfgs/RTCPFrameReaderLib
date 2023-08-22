@@ -35,7 +35,7 @@ namespace RTCPFrameReaderLib
 			uint senderSSRC;
 
 			// sender info
-			ulong ntpTimeStamp;
+			uint ntpTimeStampIntegerPart, ntpTimeStampFractionalPart;
 			uint rtpTimeStamp, senderPacketCount, senderOctetCount;
 
 			// reception report
@@ -77,12 +77,13 @@ namespace RTCPFrameReaderLib
 					reportHeader = new ReportHeader(version, padding, count, packetType, length, senderSSRC);
 
 					// sender info
-					ntpTimeStamp = Reader.ReadUInt64();
+					ntpTimeStampIntegerPart = Reader.ReadUInt32();
+					ntpTimeStampFractionalPart = Reader.ReadUInt32();
 					rtpTimeStamp = Reader.ReadUInt32();
 					senderPacketCount = Reader.ReadUInt32();
 					senderOctetCount = Reader.ReadUInt32();
 
-					senderInfo = new SenderInfo(ntpTimeStamp, rtpTimeStamp, senderPacketCount, senderOctetCount);
+					senderInfo = new SenderInfo(ntpTimeStampIntegerPart, ntpTimeStampFractionalPart, rtpTimeStamp, senderPacketCount, senderOctetCount);
 
 					// reception reports
 					receptionReports = new ReceptionReport[count];
